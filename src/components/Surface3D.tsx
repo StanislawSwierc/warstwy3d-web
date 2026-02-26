@@ -28,7 +28,9 @@ const isTouchDevice = () =>
 
 function Surface3DInner({ sim, t }: Surface3DProps) {
   const touch = useMemo(isTouchDevice, []);
-  const [interactive, setInteractive] = useState(!touch);
+  // On touch devices, the plot is locked (overlay blocks touch) by default.
+  // When unlocked, touches reach Plotly for rotation/zoom.
+  const [locked, setLocked] = useState(touch);
 
   // Build x/y meshgrid arrays for Plotly surface
   const xGrid: number[][] = [];
@@ -53,23 +55,40 @@ function Surface3DInner({ sim, t }: Surface3DProps) {
     <div style={{ position: 'relative' }}>
       {touch && (
         <button
-          onClick={() => setInteractive((v) => !v)}
+          onClick={() => setLocked((v) => !v)}
           style={{
             position: 'absolute',
             top: 8,
             right: 8,
-            zIndex: 10,
+            zIndex: 20,
             padding: '6px 14px',
             fontSize: 13,
             cursor: 'pointer',
             border: '1px solid #ccc',
             borderRadius: 4,
-            background: interactive ? '#e8f0fe' : '#f5f5f5',
-            fontWeight: interactive ? 600 : 400,
+            background: locked ? '#f5f5f5' : '#e8f0fe',
+            fontWeight: locked ? 400 : 600,
           }}
         >
-          {interactive ? t.lockPlot : t.enableRotation}
+          {locked ? t.enableRotation : t.lockPlot}
         </button>
+      )}
+      {/* Transparent overlay that intercepts touch events when locked.
+          touch-action: pan-y allows vertical scrolling to pass through
+          to the browser while blocking horizontal drag / pinch from
+          reaching the Plotly WebGL canvas underneath. */}
+      {touch && locked && (
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            zIndex: 10,
+            touchAction: 'pan-y',
+          }}
+        />
       )}
       <Plot
         data={[
@@ -95,11 +114,7 @@ function Surface3DInner({ sim, t }: Surface3DProps) {
           template: 'plotly_white' as unknown as Plotly.Template,
           margin: { l: 0, r: 0, t: 30, b: 0 },
         }}
-        config={{
-          responsive: true,
-          staticPlot: !interactive,
-          scrollZoom: interactive,
-        }}
+        config={{ responsive: true }}
       />
     </div>
   );
