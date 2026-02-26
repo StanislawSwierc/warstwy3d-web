@@ -11,6 +11,8 @@ export interface Translations {
   sliderLabel: string;
   sliceTitle: (rxFormatted: string) => string;
   langToggle: string;
+  enableRotation: string;
+  lockPlot: string;
 }
 
 const en: Translations = {
@@ -23,6 +25,8 @@ const en: Translations = {
   sliderLabel: 'R_x [Ω]:',
   sliceTitle: (rxFormatted: string) => `tan δ_c(f) at R_x = ${rxFormatted} Ω`,
   langToggle: 'PL',
+  enableRotation: 'Enable rotation',
+  lockPlot: 'Lock plot',
 };
 
 const pl: Translations = {
@@ -35,6 +39,8 @@ const pl: Translations = {
   sliderLabel: 'R_x [Ω]:',
   sliceTitle: (rxFormatted: string) => `tan δ_c(f) przy R_x = ${rxFormatted} Ω`,
   langToggle: 'EN',
+  enableRotation: 'Włącz obrót',
+  lockPlot: 'Zablokuj wykres',
 };
 
 const translations: Record<Locale, Translations> = { en, pl };

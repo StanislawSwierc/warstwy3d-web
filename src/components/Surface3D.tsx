@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useState, useMemo } from 'react';
 import Plot from 'react-plotly.js';
 import type { SimulationResult } from '../simulation';
 import type { Translations } from '../i18n';
@@ -23,7 +23,13 @@ const eye = {
   z: r * Math.sin(el),
 };
 
+const isTouchDevice = () =>
+  'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
 function Surface3DInner({ sim, t }: Surface3DProps) {
+  const touch = useMemo(isTouchDevice, []);
+  const [interactive, setInteractive] = useState(!touch);
+
   // Build x/y meshgrid arrays for Plotly surface
   const xGrid: number[][] = [];
   const yGrid: number[][] = [];
@@ -44,32 +50,58 @@ function Surface3DInner({ sim, t }: Surface3DProps) {
   }
 
   return (
-    <Plot
-      data={[
-        {
-          type: 'surface',
-          x: xGrid,
-          y: yGrid,
-          z: zGrid,
-          colorscale: 'Jet',
-          showscale: true,
-        },
-      ]}
-      layout={{
-        scene: {
-          xaxis: { title: t.axisF, type: 'log' },
-          yaxis: { title: t.axisRx, type: 'log' },
-          zaxis: { title: t.axisTandC },
-          aspectmode: 'cube',
-          camera: { eye },
-        },
-        width: 900,
-        height: 700,
-        template: 'plotly_white' as unknown as Plotly.Template,
-        margin: { l: 0, r: 0, t: 30, b: 0 },
-      }}
-      config={{ responsive: true }}
-    />
+    <div style={{ position: 'relative' }}>
+      {touch && (
+        <button
+          onClick={() => setInteractive((v) => !v)}
+          style={{
+            position: 'absolute',
+            top: 8,
+            right: 8,
+            zIndex: 10,
+            padding: '6px 14px',
+            fontSize: 13,
+            cursor: 'pointer',
+            border: '1px solid #ccc',
+            borderRadius: 4,
+            background: interactive ? '#e8f0fe' : '#f5f5f5',
+            fontWeight: interactive ? 600 : 400,
+          }}
+        >
+          {interactive ? t.lockPlot : t.enableRotation}
+        </button>
+      )}
+      <Plot
+        data={[
+          {
+            type: 'surface',
+            x: xGrid,
+            y: yGrid,
+            z: zGrid,
+            colorscale: 'Jet',
+            showscale: true,
+          },
+        ]}
+        layout={{
+          scene: {
+            xaxis: { title: t.axisF, type: 'log' },
+            yaxis: { title: t.axisRx, type: 'log' },
+            zaxis: { title: t.axisTandC },
+            aspectmode: 'cube',
+            camera: { eye },
+          },
+          width: 900,
+          height: 700,
+          template: 'plotly_white' as unknown as Plotly.Template,
+          margin: { l: 0, r: 0, t: 30, b: 0 },
+        }}
+        config={{
+          responsive: true,
+          staticPlot: !interactive,
+          scrollZoom: interactive,
+        }}
+      />
+    </div>
   );
 }
 
