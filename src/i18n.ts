@@ -14,7 +14,7 @@ export interface Translations {
 }
 
 const en: Translations = {
-  title: 'Warstwy 3D',
+  title: 'Bushing Shorted Layer',
   description:
     'Multi-layer dielectric model — total dissipation factor (tan δ_c) as a function of frequency (f) and damaged-layer resistance (R_x).',
   axisF: 'f [Hz]',
@@ -26,7 +26,7 @@ const en: Translations = {
 };
 
 const pl: Translations = {
-  title: 'Warstwy 3D',
+  title: 'Izolator Przepustowy: Zwarta Warstwa',
   description:
     'Model wielowarstwowego dielektryka — tangens kąta strat (tan δ_c) w funkcji częstotliwości (f) i rezystancji warstwy uszkodzonej (R_x).',
   axisF: 'f [Hz]',
