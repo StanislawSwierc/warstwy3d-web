@@ -71,11 +71,13 @@ export function Slice2D({ sim, rxIndex, t, onRxIndexChange }: Slice2DProps) {
           xaxis: { title: t.axisF, type: 'log' },
           yaxis: { title: t.axisTandC },
           title: t.sliceTitle(rxLabel),
-          width: 900,
+          autosize: true,
           height: 500,
           template: 'plotly_white' as unknown as Plotly.Template,
           margin: { t: 50, b: 60, l: 70, r: 30 },
         }}
+        useResizeHandler
+        style={{ width: '100%', maxWidth: 900 }}
         config={{ responsive: true }}
       />
     </div>

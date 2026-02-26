@@ -109,11 +109,13 @@ function Surface3DInner({ sim, t }: Surface3DProps) {
             aspectmode: 'cube',
             camera: { eye },
           },
-          width: 900,
+          autosize: true,
           height: 700,
           template: 'plotly_white' as unknown as Plotly.Template,
           margin: { l: 0, r: 0, t: 30, b: 0 },
         }}
+        useResizeHandler
+        style={{ width: '100%', maxWidth: 900 }}
         config={{ responsive: true }}
       />
     </div>
