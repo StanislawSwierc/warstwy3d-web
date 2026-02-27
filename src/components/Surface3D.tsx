@@ -1,4 +1,4 @@
-import { memo, useState, useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import Plot from 'react-plotly.js';
 import type { SimulationResult } from '../simulation';
 import type { Translations } from '../i18n';
@@ -28,9 +28,6 @@ const isTouchDevice = () =>
 
 function Surface3DInner({ sim, t }: Surface3DProps) {
   const touch = useMemo(isTouchDevice, []);
-  // On touch devices, the plot is locked (overlay blocks touch) by default.
-  // When unlocked, touches reach Plotly for rotation/zoom.
-  const [locked, setLocked] = useState(touch);
 
   // Build x/y meshgrid arrays for Plotly surface
   const xGrid: number[][] = [];
@@ -53,31 +50,11 @@ function Surface3DInner({ sim, t }: Surface3DProps) {
 
   return (
     <div style={{ position: 'relative' }}>
-      {touch && (
-        <button
-          onClick={() => setLocked((v) => !v)}
-          style={{
-            position: 'absolute',
-            top: 8,
-            right: 8,
-            zIndex: 20,
-            padding: '6px 14px',
-            fontSize: 13,
-            cursor: 'pointer',
-            border: '1px solid #ccc',
-            borderRadius: 4,
-            background: locked ? '#f5f5f5' : '#e8f0fe',
-            fontWeight: locked ? 400 : 600,
-          }}
-        >
-          {locked ? t.enableRotation : t.lockPlot}
-        </button>
-      )}
-      {/* Transparent overlay that intercepts touch events when locked.
+      {/* On touch devices, a transparent overlay intercepts touch events.
           touch-action: pan-y allows vertical scrolling to pass through
           to the browser while blocking horizontal drag / pinch from
           reaching the Plotly WebGL canvas underneath. */}
-      {touch && locked && (
+      {touch && (
         <div
           style={{
             position: 'absolute',
