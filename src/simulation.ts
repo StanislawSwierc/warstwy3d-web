@@ -1,8 +1,9 @@
 /**
  * Core simulation for Warstwy3D — multi-layer dielectric model.
  *
- * Computes the total dissipation factor (tan delta_c) as a function
- * of frequency (f) and damaged-layer resistance (R_x).
+ * Computes the total dissipation factor (tan delta_c) and the
+ * equivalent capacitance (C_vc) as a function of frequency (f)
+ * and damaged-layer resistance (R_x).
  */
 
 /** Generate logarithmically spaced values (equivalent to np.logspace). */
@@ -22,6 +23,8 @@ export interface SimulationResult {
   rxVec: Float64Array;
   /** tan(delta_c) matrix, row-major [R][F] — Z[rxIndex][fIndex] */
   Z: Float64Array[];
+  /** C_vc matrix, row-major [R][F] — Zcvc[rxIndex][fIndex] */
+  Zcvc: Float64Array[];
 }
 
 export function runSimulation(): SimulationResult {
@@ -34,12 +37,14 @@ export function runSimulation(): SimulationResult {
 
   // Variable vectors
   const fVec = logspace(-1, 3, 100);   // Frequency [Hz]
-  const rxVec = logspace(1, 10, 100);  // Damaged-layer resistance [Ohm]
+  const rxVec = logspace(1, 9, 100);   // Damaged-layer resistance [Ohm]
 
-  // Allocate result matrix
+  // Allocate result matrices
   const Z: Float64Array[] = new Array(rxVec.length);
+  const Zcvc: Float64Array[] = new Array(rxVec.length);
   for (let r = 0; r < rxVec.length; r++) {
     Z[r] = new Float64Array(fVec.length);
+    Zcvc[r] = new Float64Array(fVec.length);
   }
 
   // Per-layer resistance and capacitance arrays
@@ -107,9 +112,14 @@ export function runSimulation(): SimulationResult {
       const Zc_abs_sq = Zc_re * Zc_re + Zc_im * Zc_im;
       const tand_c = W_c / (Zc_abs_sq * omega * C_c);
 
+      // Equivalent capacitance C_vc
+      const C_x = 1 / (omega * R_x * tand_c);
+      const C_vc = C_z * C_x / ((n - 1) * C_x + C_z);
+
       Z[ri][fi] = tand_c;
+      Zcvc[ri][fi] = C_vc;
     }
   }
 
-  return { fVec, rxVec, Z };
+  return { fVec, rxVec, Z, Zcvc };
 }

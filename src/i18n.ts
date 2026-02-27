@@ -8,6 +8,7 @@ export interface Translations {
   axisF: string;
   axisRx: string;
   axisTandC: string;
+  axisCvc: string;
   sliderLabel: string;
   sliceTitle: (rxFormatted: string) => string;
   langToggle: string;
@@ -20,6 +21,7 @@ const en: Translations = {
   axisF: 'f [Hz]',
   axisRx: 'R_x [Ω]',
   axisTandC: 'tan δ_c',
+  axisCvc: 'C_vc',
   sliderLabel: 'R_x [Ω]:',
   sliceTitle: (rxFormatted: string) => `tan δ_c(f) at R_x = ${rxFormatted} Ω`,
   langToggle: 'PL',
@@ -32,6 +34,7 @@ const pl: Translations = {
   axisF: 'f [Hz]',
   axisRx: 'R_x [Ω]',
   axisTandC: 'tan δ_c',
+  axisCvc: 'C_vc',
   sliderLabel: 'R_x [Ω]:',
   sliceTitle: (rxFormatted: string) => `tan δ_c(f) przy R_x = ${rxFormatted} Ω`,
   langToggle: 'EN',

@@ -5,6 +5,10 @@ import type { Translations } from '../i18n';
 
 interface Surface3DProps {
   sim: SimulationResult;
+  /** The Z data matrix to plot (e.g. sim.Z or sim.Zcvc) */
+  zData: Float64Array[];
+  /** Label for the z axis */
+  zAxisTitle: string;
   t: Translations;
 }
 
@@ -26,7 +30,7 @@ const eye = {
 const isTouchDevice = () =>
   'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-function Surface3DInner({ sim, t }: Surface3DProps) {
+function Surface3DInner({ sim, zData, zAxisTitle, t }: Surface3DProps) {
   const touch = useMemo(isTouchDevice, []);
 
   // Build x/y meshgrid arrays for Plotly surface
@@ -41,7 +45,7 @@ function Surface3DInner({ sim, t }: Surface3DProps) {
     for (let fi = 0; fi < sim.fVec.length; fi++) {
       xRow.push(sim.fVec[fi]);
       yRow.push(sim.rxVec[ri]);
-      zRow.push(sim.Z[ri][fi]);
+      zRow.push(zData[ri][fi]);
     }
     xGrid.push(xRow);
     yGrid.push(yRow);
@@ -82,7 +86,7 @@ function Surface3DInner({ sim, t }: Surface3DProps) {
           scene: {
             xaxis: { title: t.axisF, type: 'log' },
             yaxis: { title: t.axisRx, type: 'log' },
-            zaxis: { title: t.axisTandC },
+            zaxis: { title: zAxisTitle },
             aspectmode: 'cube',
             camera: { eye },
           },

@@ -44,7 +44,9 @@ export default function App() {
 
         <p style={{ color: '#555', lineHeight: 1.5, marginBottom: 24 }}>{t.description}</p>
 
-        <Surface3D sim={sim} t={t} />
+        <Surface3D sim={sim} zData={sim.Z} zAxisTitle={t.axisTandC} t={t} />
+
+        <Surface3D sim={sim} zData={sim.Zcvc} zAxisTitle={t.axisCvc} t={t} />
 
         <Slice2D sim={sim} rxIndex={rxIndex} t={t} onRxIndexChange={setRxIndex} />
       </div>
