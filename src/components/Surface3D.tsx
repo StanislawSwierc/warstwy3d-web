@@ -55,7 +55,7 @@ function Surface3DInner({ sim, zData, zAxisTitle, t }: Surface3DProps) {
           x: xGrid,
           y: yGrid,
           z: zGrid,
-          colorscale: 'Magma',
+          colorscale: 'RdBu',
           showscale: true,
         },
       ]}
