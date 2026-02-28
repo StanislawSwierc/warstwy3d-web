@@ -1,13 +1,82 @@
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
 import { LocaleContext, getSavedLocale, saveLocale, getTranslations } from './i18n';
 import type { Locale } from './i18n';
-import { runSimulation } from './simulation';
-import { Surface3D } from './components/Surface3D';
+import { runSimulation, DEFAULT_PARAMS } from './simulation';
+import type { SimulationParams } from './simulation';
+import { Surface3D, DEFAULT_EYE } from './components/Surface3D';
+import type { CameraEye } from './components/Surface3D';
 import { Slice2D } from './components/Slice2D';
+import { ParamsPanel } from './components/ParamsPanel';
+
+function parseCameraEye(sp: URLSearchParams, key: string): CameraEye {
+  const raw = sp.get(key);
+  if (!raw) return { ...DEFAULT_EYE };
+  const parts = raw.split(',').map(Number);
+  if (parts.length === 3 && parts.every(Number.isFinite)) {
+    return { x: parts[0], y: parts[1], z: parts[2] };
+  }
+  return { ...DEFAULT_EYE };
+}
+
+function parseHashState() {
+  const hash = window.location.hash.slice(1);
+  const sp = hash ? new URLSearchParams(hash) : new URLSearchParams();
+
+  const params = { ...DEFAULT_PARAMS };
+  for (const key of ['n', 'k', 'Rz', 'Cz'] as const) {
+    const raw = sp.get(key);
+    if (raw != null) {
+      const v = Number(raw);
+      if (Number.isFinite(v) && v > 0) {
+        params[key] = v;
+      }
+    }
+  }
+
+  const cam1 = parseCameraEye(sp, 'cam1');
+  const cam2 = parseCameraEye(sp, 'cam2');
+
+  return { params, cam1, cam2 };
+}
+
+function formatEye(eye: CameraEye): string {
+  // Round to 2 decimal places to keep URLs compact
+  return `${+eye.x.toFixed(2)},${+eye.y.toFixed(2)},${+eye.z.toFixed(2)}`;
+}
+
+function writeHash(params: SimulationParams, cam1: CameraEye, cam2: CameraEye): void {
+  const sp = new URLSearchParams();
+  sp.set('n', String(params.n));
+  sp.set('k', String(params.k));
+  sp.set('Rz', String(params.Rz));
+  sp.set('Cz', String(params.Cz));
+  sp.set('cam1', formatEye(cam1));
+  sp.set('cam2', formatEye(cam2));
+  window.history.replaceState(null, '', '#' + sp.toString());
+}
 
 export default function App() {
   const [locale, setLocale] = useState<Locale>(getSavedLocale);
-  const [rxIndex, setRxIndex] = useState(50); // ~middle of logspace
+  const [rxIndex, setRxIndex] = useState(50);
+
+  const initial = useMemo(() => parseHashState(), []);
+  const [params, setParams] = useState<SimulationParams>(initial.params);
+  const paramsRef = useRef(params);
+  paramsRef.current = params;
+  const cam1Ref = useRef<CameraEye>(initial.cam1);
+  const cam2Ref = useRef<CameraEye>(initial.cam2);
+  const hashTimerRef = useRef<ReturnType<typeof setTimeout>>();
+
+  // Debounced hash write for camera changes (500ms)
+  const scheduleHashWrite = useCallback(() => {
+    clearTimeout(hashTimerRef.current);
+    hashTimerRef.current = setTimeout(() => {
+      writeHash(paramsRef.current, cam1Ref.current, cam2Ref.current);
+    }, 500);
+  }, []);
+
+  // Clean up timer on unmount
+  useEffect(() => () => clearTimeout(hashTimerRef.current), []);
 
   const t = useMemo(() => getTranslations(locale), [locale]);
 
@@ -19,8 +88,25 @@ export default function App() {
     });
   }, []);
 
-  // Run simulation once (pure computation, deterministic)
-  const sim = useMemo(() => runSimulation(), []);
+  const handleParamsChange = useCallback((next: SimulationParams) => {
+    setParams(next);
+    writeHash(next, cam1Ref.current, cam2Ref.current);
+  }, []);
+
+  const handleCam1Change = useCallback((eye: CameraEye) => {
+    cam1Ref.current = eye;
+    scheduleHashWrite();
+  }, [scheduleHashWrite]);
+
+  const handleCam2Change = useCallback((eye: CameraEye) => {
+    cam2Ref.current = eye;
+    scheduleHashWrite();
+  }, [scheduleHashWrite]);
+
+  const sim = useMemo(
+    () => runSimulation(params),
+    [params.n, params.k, params.Rz, params.Cz],
+  );
 
   return (
     <LocaleContext.Provider value={{ locale, t, toggleLocale }}>
@@ -44,9 +130,13 @@ export default function App() {
 
         <p style={{ color: '#555', lineHeight: 1.5, marginBottom: 24 }}>{t.description}</p>
 
-        <Surface3D sim={sim} zData={sim.Z} zAxisTitle={t.axisTandC} t={t} />
+        <ParamsPanel params={params} onParamsChange={handleParamsChange} t={t} />
 
-        <Surface3D sim={sim} zData={sim.Zcvc} zAxisTitle={t.axisCvc} t={t} />
+        <Surface3D sim={sim} zData={sim.Z} zAxisTitle={t.axisTandC} t={t}
+          cameraEye={initial.cam1} onCameraChange={handleCam1Change} />
+
+        <Surface3D sim={sim} zData={sim.Zcvc} zAxisTitle={t.axisCvc} t={t}
+          cameraEye={initial.cam2} onCameraChange={handleCam2Change} />
 
         <Slice2D sim={sim} rxIndex={rxIndex} t={t} onRxIndexChange={setRxIndex} />
       </div>

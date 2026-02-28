@@ -16,6 +16,17 @@ function logspace(start: number, stop: number, num: number): Float64Array {
   return result;
 }
 
+export interface SimulationParams {
+  n: number;    // Number of layers
+  k: number;    // Number of damaged layers
+  Rz: number;   // Nominal resistance [Ω]
+  Cz: number;   // Nominal layer capacitance [F]
+}
+
+export const DEFAULT_PARAMS: SimulationParams = {
+  n: 16, k: 1, Rz: 6.8e9, Cz: 1.7e-9,
+};
+
 export interface SimulationResult {
   /** Frequency vector [Hz], length F */
   fVec: Float64Array;
@@ -27,13 +38,9 @@ export interface SimulationResult {
   Zcvc: Float64Array[];
 }
 
-export function runSimulation(): SimulationResult {
+export function runSimulation(params: SimulationParams = DEFAULT_PARAMS): SimulationResult {
   // Model parameters
-  const n = 16;        // Number of layers
-  const k = 1;         // Number of damaged layers
-  // U_c = 140 V — cancels out in the tand_c formula (see derivation below)
-  const R_z = 6.8e9;   // Nominal resistance [Ohm]
-  const C_z = 1.7e-9;  // Nominal layer capacitance [F]
+  const { n, k, Rz: R_z, Cz: C_z } = params;
 
   // Variable vectors
   const fVec = logspace(-1, 3, 100);   // Frequency [Hz]

@@ -12,6 +12,11 @@ export interface Translations {
   sliderLabel: string;
   sliceTitle: (rxFormatted: string) => string;
   langToggle: string;
+  paramsHeader: string;
+  paramN: string;
+  paramK: string;
+  paramRz: string;
+  paramCz: string;
 }
 
 const en: Translations = {
@@ -25,6 +30,11 @@ const en: Translations = {
   sliderLabel: 'R_x [Ω]:',
   sliceTitle: (rxFormatted: string) => `tan δ_c(f) at R_x = ${rxFormatted} Ω`,
   langToggle: 'PL',
+  paramsHeader: 'Parameters',
+  paramN: 'Number of layers (n)',
+  paramK: 'Damaged layers (k)',
+  paramRz: 'Nominal resistance R_z [\u03A9]',
+  paramCz: 'Layer capacitance C_z [F]',
 };
 
 const pl: Translations = {
@@ -38,6 +48,11 @@ const pl: Translations = {
   sliderLabel: 'R_x [Ω]:',
   sliceTitle: (rxFormatted: string) => `tan δ_c(f) przy R_x = ${rxFormatted} Ω`,
   langToggle: 'EN',
+  paramsHeader: 'Parametry',
+  paramN: 'Liczba warstw (n)',
+  paramK: 'Warstwy uszkodzone (k)',
+  paramRz: 'Rezystancja znamionowa R_z [\u03A9]',
+  paramCz: 'Pojemno\u015B\u0107 warstwy C_z [F]',
 };
 
 const translations: Record<Locale, Translations> = { en, pl };
