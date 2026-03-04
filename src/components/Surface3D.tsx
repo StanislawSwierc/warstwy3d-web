@@ -113,7 +113,7 @@ function Surface3DInner({ sim, zData, zAxisTitle, t, cameraEye, onCameraChange }
         margin: { l: 0, r: 0, t: 30, b: 0 },
       }}
       useResizeHandler
-      style={{ width: '100%', maxWidth: 900 }}
+      style={{ width: '100%', maxWidth: 960 }}
       config={{ responsive: true }}
       onInitialized={handleInit}
     />

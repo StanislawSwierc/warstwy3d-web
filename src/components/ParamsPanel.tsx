@@ -110,6 +110,9 @@ export function ParamsPanel({ params, onParamsChange, t }: ParamsPanelProps) {
       borderRadius: 8,
       padding: '12px 16px',
       marginBottom: 24,
+      background: '#fff',
+      maxWidth: 960,
+      boxSizing: 'border-box',
     }}>
       <legend style={{ fontWeight: 600, fontSize: 15, padding: '0 6px' }}>
         {t.paramsHeader}

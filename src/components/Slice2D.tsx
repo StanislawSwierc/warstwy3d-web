@@ -78,13 +78,14 @@ export function Slice2D({ sim, rxIndex, t, onRxIndexChange }: Slice2DProps) {
           xaxis: { title: t.axisF, type: 'log' },
           yaxis: { title: t.axisTandC },
           title: t.sliceTitle(rxLabel),
+          showlegend: false,
           autosize: true,
           height: 500,
           template: 'plotly_white' as unknown as Plotly.Template,
           margin: { t: 50, b: 60, l: 70, r: 30 },
         }}
         useResizeHandler
-        style={{ width: '100%', maxWidth: 900 }}
+        style={{ width: '100%', maxWidth: 960 }}
         config={{ responsive: true }}
       />
       <Plot
@@ -100,13 +101,14 @@ export function Slice2D({ sim, rxIndex, t, onRxIndexChange }: Slice2DProps) {
           xaxis: { title: t.axisF, type: 'log' },
           yaxis: { title: t.axisCvc },
           title: t.sliceCvcTitle(rxLabel),
+          showlegend: false,
           autosize: true,
           height: 500,
           template: 'plotly_white' as unknown as Plotly.Template,
           margin: { t: 50, b: 60, l: 70, r: 30 },
         }}
         useResizeHandler
-        style={{ width: '100%', maxWidth: 900 }}
+        style={{ width: '100%', maxWidth: 960 }}
         config={{ responsive: true }}
       />
     </div>

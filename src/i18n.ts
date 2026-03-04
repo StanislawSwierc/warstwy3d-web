@@ -1,4 +1,6 @@
 import { createContext, useContext } from 'react';
+import descriptionEn from './content/description.en.md';
+import descriptionPl from './content/description.pl.md';
 
 export type Locale = 'en' | 'pl';
 
@@ -22,8 +24,7 @@ export interface Translations {
 
 const en: Translations = {
   title: 'Bushing Shorted Layer',
-  description:
-    'Multi-layer dielectric model — total dissipation factor (tan δ_c) as a function of frequency (f) and damaged-layer resistance (R_x).',
+  description: descriptionEn,
   axisF: 'f [Hz]',
   axisRx: 'R_x [Ω]',
   axisTandC: 'tan δ_c',
@@ -41,8 +42,7 @@ const en: Translations = {
 
 const pl: Translations = {
   title: 'Izolator Przepustowy: Zwarta Warstwa',
-  description:
-    'Model wielowarstwowego dielektryka — tangens kąta strat (tan δ_c) w funkcji częstotliwości (f) i rezystancji warstwy uszkodzonej (R_x).',
+  description: descriptionPl,
   axisF: 'f [Hz]',
   axisRx: 'R_x [Ω]',
   axisTandC: 'tan δ_c',

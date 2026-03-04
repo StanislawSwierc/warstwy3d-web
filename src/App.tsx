@@ -128,7 +128,10 @@ export default function App() {
           </button>
         </header>
 
-        <p style={{ color: '#555', lineHeight: 1.5, marginBottom: 24 }}>{t.description}</p>
+        <div
+          style={{ color: '#555', lineHeight: 1.5, marginBottom: 24 }}
+          dangerouslySetInnerHTML={{ __html: t.description }}
+        />
 
         <ParamsPanel params={params} onParamsChange={handleParamsChange} t={t} />
 
