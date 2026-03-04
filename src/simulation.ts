@@ -24,7 +24,8 @@ export interface SimulationParams {
 }
 
 export const DEFAULT_PARAMS: SimulationParams = {
-  n: 16, k: 1, Rz: 6.8e9, Cz: 1.7e-9,
+  n: 16, k: 1, Rz: 6.8e8, //
+  Cz: 1.7e-9, // Total capacitance TODO: Update name
 };
 
 export interface SimulationResult {
@@ -40,7 +41,9 @@ export interface SimulationResult {
 
 export function runSimulation(params: SimulationParams = DEFAULT_PARAMS): SimulationResult {
   // Model parameters
-  const { n, k, Rz: R_z, Cz: C_z } = params;
+  const { n, k, Rz: R_z, Cz: C_c } = params;
+
+  const C_z = C_c * n; // Layer capacitance
 
   // Variable vectors
   const fVec = logspace(-1, 3, 100);   // Frequency [Hz]
@@ -61,7 +64,6 @@ export function runSimulation(params: SimulationParams = DEFAULT_PARAMS): Simula
     C_i[i] = C_z;
   }
 
-  const C_c = C_z / n; // Total capacitance
 
   for (let fi = 0; fi < fVec.length; fi++) {
     const f = fVec[fi];
