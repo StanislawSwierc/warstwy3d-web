@@ -23,7 +23,7 @@ function parseHashState() {
   const sp = hash ? new URLSearchParams(hash) : new URLSearchParams();
 
   const params = { ...DEFAULT_PARAMS };
-  for (const key of ['n', 'k', 'Rz', 'Cz'] as const) {
+  for (const key of ['n', 'k', 'Rz', 'Cc'] as const) {
     const raw = sp.get(key);
     if (raw != null) {
       const v = Number(raw);
@@ -49,7 +49,7 @@ function writeHash(params: SimulationParams, cam1: CameraEye, cam2: CameraEye): 
   sp.set('n', String(params.n));
   sp.set('k', String(params.k));
   sp.set('Rz', String(params.Rz));
-  sp.set('Cz', String(params.Cz));
+  sp.set('Cc', String(params.Cc));
   sp.set('cam1', formatEye(cam1));
   sp.set('cam2', formatEye(cam2));
   window.history.replaceState(null, '', '#' + sp.toString());
@@ -105,7 +105,7 @@ export default function App() {
 
   const sim = useMemo(
     () => runSimulation(params),
-    [params.n, params.k, params.Rz, params.Cz],
+    [params.n, params.k, params.Rz, params.Cc],
   );
 
   return (

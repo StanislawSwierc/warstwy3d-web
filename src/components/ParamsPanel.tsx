@@ -16,14 +16,14 @@ function formatValue(v: number): string {
 
 type ParamKey = keyof SimulationParams;
 
-const PARAM_KEYS: ParamKey[] = ['n', 'k', 'Rz', 'Cz'];
+const PARAM_KEYS: ParamKey[] = ['n', 'k', 'Rz', 'Cc'];
 
 function labelFor(key: ParamKey, t: Translations): string {
   switch (key) {
     case 'n': return t.paramN;
     case 'k': return t.paramK;
     case 'Rz': return t.paramRz;
-    case 'Cz': return t.paramCz;
+    case 'Cc': return t.paramCc;
   }
 }
 
@@ -40,11 +40,11 @@ export function ParamsPanel({ params, onParamsChange, t }: ParamsPanelProps) {
     n: formatValue(params.n),
     k: formatValue(params.k),
     Rz: formatValue(params.Rz),
-    Cz: formatValue(params.Cz),
+    Cc: formatValue(params.Cc),
   }));
 
   const [errors, setErrors] = useState<Record<ParamKey, boolean>>({
-    n: false, k: false, Rz: false, Cz: false,
+    n: false, k: false, Rz: false, Cc: false,
   });
 
   const handleChange = useCallback((key: ParamKey, raw: string) => {

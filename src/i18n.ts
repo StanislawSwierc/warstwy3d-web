@@ -19,7 +19,7 @@ export interface Translations {
   paramN: string;
   paramK: string;
   paramRz: string;
-  paramCz: string;
+  paramCc: string;
 }
 
 const en: Translations = {
@@ -37,7 +37,7 @@ const en: Translations = {
   paramN: 'Number of layers (n)',
   paramK: 'Damaged layers (k)',
   paramRz: 'Nominal resistance R_z [\u03A9]',
-  paramCz: 'Bushing capacitance C_z [F]',
+  paramCc: 'Bushing capacitance C_c [F]',
 };
 
 const pl: Translations = {
@@ -55,7 +55,7 @@ const pl: Translations = {
   paramN: 'Liczba warstw (n)',
   paramK: 'Warstwy uszkodzone (k)',
   paramRz: 'Rezystancja znamionowa R_z [\u03A9]',
-  paramCz: 'Pojemno\u015B\u0107 izolatora C_z [F]',
+  paramCc: 'Pojemno\u015B\u0107 izolatora C_c [F]',
 };
 
 const translations: Record<Locale, Translations> = { en, pl };

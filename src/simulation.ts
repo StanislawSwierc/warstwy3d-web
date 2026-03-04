@@ -20,12 +20,12 @@ export interface SimulationParams {
   n: number;    // Number of layers
   k: number;    // Number of damaged layers
   Rz: number;   // Nominal resistance [Ω]
-  Cz: number;   // Nominal layer capacitance [F]
+  Cc: number;   // Total bushing capacitance [F]
 }
 
 export const DEFAULT_PARAMS: SimulationParams = {
   n: 16, k: 1, Rz: 6.8e8, //
-  Cz: 1.7e-9, // Total capacitance TODO: Update name
+  Cc: 1.7e-9, // Total bushing capacitance
 };
 
 export interface SimulationResult {
@@ -41,7 +41,7 @@ export interface SimulationResult {
 
 export function runSimulation(params: SimulationParams = DEFAULT_PARAMS): SimulationResult {
   // Model parameters
-  const { n, k, Rz: R_z, Cz: C_c } = params;
+  const { n, k, Rz: R_z, Cc: C_c } = params;
 
   const C_z = C_c * n; // Layer capacitance
 
