@@ -80,7 +80,7 @@ export function Slice2D({ sim, rxIndex, t, onRxIndexChange }: Slice2DProps) {
           title: t.sliceTitle(rxLabel),
           showlegend: false,
           autosize: true,
-          height: 500,
+          height: 375,
           template: 'plotly_white' as unknown as Plotly.Template,
           margin: { t: 50, b: 60, l: 70, r: 30 },
         }}
@@ -103,7 +103,7 @@ export function Slice2D({ sim, rxIndex, t, onRxIndexChange }: Slice2DProps) {
           title: t.sliceCvcTitle(rxLabel),
           showlegend: false,
           autosize: true,
-          height: 500,
+          height: 375,
           template: 'plotly_white' as unknown as Plotly.Template,
           margin: { t: 50, b: 60, l: 70, r: 30 },
         }}
