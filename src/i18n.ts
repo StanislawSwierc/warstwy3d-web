@@ -11,6 +11,7 @@ export interface Translations {
   axisCvc: string;
   sliderLabel: string;
   sliceTitle: (rxFormatted: string) => string;
+  sliceCvcTitle: (rxFormatted: string) => string;
   langToggle: string;
   paramsHeader: string;
   paramN: string;
@@ -29,6 +30,7 @@ const en: Translations = {
   axisCvc: 'C_vc',
   sliderLabel: 'R_x [Ω]:',
   sliceTitle: (rxFormatted: string) => `tan δ_c(f) at R_x = ${rxFormatted} Ω`,
+  sliceCvcTitle: (rxFormatted: string) => `C_vc(f) at R_x = ${rxFormatted} Ω`,
   langToggle: 'PL',
   paramsHeader: 'Parameters',
   paramN: 'Number of layers (n)',
@@ -47,6 +49,7 @@ const pl: Translations = {
   axisCvc: 'C_vc',
   sliderLabel: 'R_x [Ω]:',
   sliceTitle: (rxFormatted: string) => `tan δ_c(f) przy R_x = ${rxFormatted} Ω`,
+  sliceCvcTitle: (rxFormatted: string) => `C_vc(f) przy R_x = ${rxFormatted} Ω`,
   langToggle: 'EN',
   paramsHeader: 'Parametry',
   paramN: 'Liczba warstw (n)',

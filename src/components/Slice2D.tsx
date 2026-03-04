@@ -32,14 +32,21 @@ function formatEngineering(value: number): string {
 }
 
 export function Slice2D({ sim, rxIndex, t, onRxIndexChange }: Slice2DProps) {
-  const rxActual = sim.rxVec[rxIndex];
+  const maxIndex = sim.rxVec.length - 1;
+  // Reverse the slider: leftmost = largest R_x, rightmost = smallest R_x
+  const reversedIndex = maxIndex - rxIndex;
+  const rxActual = sim.rxVec[reversedIndex];
   const rxLabel = formatEngineering(rxActual);
 
   // Extract the row for the selected R_x
-  const yData: number[] = [];
+  const yTand: number[] = [];
+  const yCvc: number[] = [];
   for (let fi = 0; fi < sim.fVec.length; fi++) {
-    yData.push(sim.Z[rxIndex][fi]);
+    yTand.push(sim.Z[reversedIndex][fi]);
+    yCvc.push(sim.Zcvc[reversedIndex][fi]);
   }
+
+  const xData = Array.from(sim.fVec);
 
   return (
     <div>
@@ -51,7 +58,7 @@ export function Slice2D({ sim, rxIndex, t, onRxIndexChange }: Slice2DProps) {
           id="rx-slider"
           type="range"
           min={0}
-          max={sim.rxVec.length - 1}
+          max={maxIndex}
           value={rxIndex}
           onChange={(e) => onRxIndexChange(Number(e.target.value))}
           style={{ flex: 1, maxWidth: 400 }}
@@ -63,14 +70,36 @@ export function Slice2D({ sim, rxIndex, t, onRxIndexChange }: Slice2DProps) {
           {
             type: 'scatter',
             mode: 'lines',
-            x: Array.from(sim.fVec),
-            y: yData,
+            x: xData,
+            y: yTand,
           },
         ]}
         layout={{
           xaxis: { title: t.axisF, type: 'log' },
           yaxis: { title: t.axisTandC },
           title: t.sliceTitle(rxLabel),
+          autosize: true,
+          height: 500,
+          template: 'plotly_white' as unknown as Plotly.Template,
+          margin: { t: 50, b: 60, l: 70, r: 30 },
+        }}
+        useResizeHandler
+        style={{ width: '100%', maxWidth: 900 }}
+        config={{ responsive: true }}
+      />
+      <Plot
+        data={[
+          {
+            type: 'scatter',
+            mode: 'lines',
+            x: xData,
+            y: yCvc,
+          },
+        ]}
+        layout={{
+          xaxis: { title: t.axisF, type: 'log' },
+          yaxis: { title: t.axisCvc },
+          title: t.sliceCvcTitle(rxLabel),
           autosize: true,
           height: 500,
           template: 'plotly_white' as unknown as Plotly.Template,
