@@ -99,7 +99,7 @@ export function Slice2D({ sim, rxIndex, t, onRxIndexChange }: Slice2DProps) {
         ]}
         layout={{
           xaxis: { title: t.axisF, type: 'log' },
-          yaxis: { title: t.axisCvc, tickformat: '.2e' },
+          yaxis: { title: t.axisCvc, tickformat: '.4e' },
           title: t.sliceCvcTitle(rxLabel),
           showlegend: false,
           autosize: true,
