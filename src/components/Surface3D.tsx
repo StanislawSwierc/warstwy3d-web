@@ -96,21 +96,26 @@ function Surface3DInner({ sim, zData, zAxisTitle, t, cameraEye, onCameraChange }
           z: zGrid,
           colorscale: 'RdBu',
           showscale: false,
+          hovertemplate:
+            `${t.axisF}: %{x}<br>` +
+            `${t.axisRx}: %{y}<br>` +
+            `${zAxisTitle}: %{z}<extra></extra>`,
         },
       ]}
       layout={{
         scene: {
-          xaxis: { title: t.axisF, type: 'log' },
-          yaxis: { title: t.axisRx, type: 'log' },
-          zaxis: { title: zAxisTitle },
+          xaxis: { title: { text: t.axisF }, type: 'log' },
+          yaxis: { title: { text: t.axisRx }, type: 'log' },
+          zaxis: { title: { text: zAxisTitle } },
           aspectmode: 'cube',
           camera: { eye: currentEyeRef.current },
         },
+        title: { text: zAxisTitle },
         showlegend: false,
         autosize: true,
         height: 700,
         template: 'plotly_white' as unknown as Plotly.Template,
-        margin: { l: 0, r: 0, t: 30, b: 0 },
+        margin: { l: 0, r: 0, t: 50, b: 0 },
       }}
       useResizeHandler
       style={{ width: '100%', maxWidth: 960 }}
