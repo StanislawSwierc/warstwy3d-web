@@ -1,9 +1,9 @@
-# Warstwy 3D
+# Bushing Model
 
 Multi-layer dielectric model — computes the total dissipation factor (tan δ_c)
 as a function of frequency (f) and damaged-layer resistance (R_x).
 
-**Live demo:** https://stanislawswierc.github.io/warstwy3d-web/
+**Live demo:** https://jbuchacz.github.io/bushing-model-web/
 
 ## Features
 
