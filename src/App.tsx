@@ -128,6 +128,22 @@ export default function App() {
           </button>
         </header>
 
+        <div style={{
+          marginBottom: 24,
+          padding: '20px 24px',
+          background: '#f0f4f8',
+          borderLeft: '4px solid #3b82f6',
+          borderRadius: 4,
+          lineHeight: 1.6,
+          color: '#333',
+        }}>
+          <p style={{ margin: '0 0 8px' }}>{t.bannerText}</p>
+          <p style={{ margin: 0 }}>
+            {t.bannerContact}{' '}
+            <a href="mailto:jbuchacz@gmail.com" style={{ color: '#3b82f6' }}>jbuchacz@gmail.com</a>
+          </p>
+        </div>
+
         <div
           style={{ color: '#555', lineHeight: 1.5, marginBottom: 24 }}
           dangerouslySetInnerHTML={{ __html: t.description }}

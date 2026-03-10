@@ -20,6 +20,8 @@ export interface Translations {
   paramK: string;
   paramRz: string;
   paramCc: string;
+  bannerText: string;
+  bannerContact: string;
 }
 
 const en: Translations = {
@@ -38,6 +40,8 @@ const en: Translations = {
   paramK: 'Damaged layers (k)',
   paramRz: 'Nominal resistance R_z [\u03A9]',
   paramCc: 'Bushing capacitance C_c [F]',
+  bannerText: 'The presented charts are based on an equivalent circuit model of a transformer bushing, which has been empirically validated.',
+  bannerContact: 'If you are interested in applying this model or would like more detailed information, please feel free to get in touch:',
 };
 
 const pl: Translations = {
@@ -56,6 +60,8 @@ const pl: Translations = {
   paramK: 'Warstwy uszkodzone (k)',
   paramRz: 'Rezystancja znamionowa R_z [\u03A9]',
   paramCc: 'Pojemno\u015B\u0107 izolatora C_c [F]',
+  bannerText: 'Prezentowane wykresy zostały opracowane w oparciu o model układu zastępczego izolatora przepustowego, którego skuteczność potwierdzono w praktycznych badaniach.',
+  bannerContact: 'Jeśli są Państwo zainteresowani wykorzystaniem tego modelu lub chcą uzyskać szczegółowe informacje, serdecznie zapraszam do kontaktu:',
 };
 
 const translations: Record<Locale, Translations> = { en, pl };
