@@ -47,7 +47,7 @@ export function runSimulation(params: SimulationParams = DEFAULT_PARAMS): Simula
 
   // Variable vectors
   const fVec = logspace(-1, 3, 100);   // Frequency [Hz]
-  const rxVec = logspace(1, 9, 100);   // Damaged-layer resistance [Ohm]
+  const rxVec = logspace(1, Math.log10(R_z), 100);   // Damaged-layer resistance [Ohm]
 
   // Allocate result matrices
   const Z: Float64Array[] = new Array(rxVec.length);

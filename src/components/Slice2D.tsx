@@ -42,8 +42,8 @@ export function Slice2D({ sim, rxIndex, t, onRxIndexChange }: Slice2DProps) {
   const yTand: number[] = [];
   const yCvc: number[] = [];
   for (let fi = 0; fi < sim.fVec.length; fi++) {
-    yTand.push(sim.Z[reversedIndex][fi]);
-    yCvc.push(sim.Zcvc[reversedIndex][fi]);
+    yTand.push(parseFloat(sim.Z[reversedIndex][fi].toPrecision(10)));
+    yCvc.push(parseFloat(sim.Zcvc[reversedIndex][fi].toPrecision(10)));
   }
 
   const xData = Array.from(sim.fVec);

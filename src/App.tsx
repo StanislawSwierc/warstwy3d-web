@@ -57,9 +57,9 @@ function writeHash(params: SimulationParams, cam1: CameraEye, cam2: CameraEye): 
 
 export default function App() {
   const [locale, setLocale] = useState<Locale>(getSavedLocale);
-  const [rxIndex, setRxIndex] = useState(50);
 
   const initial = useMemo(() => parseHashState(), []);
+  const [rxIndex, setRxIndex] = useState(0);
   const [params, setParams] = useState<SimulationParams>(initial.params);
   const paramsRef = useRef(params);
   paramsRef.current = params;
