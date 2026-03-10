@@ -42,11 +42,17 @@ export function Slice2D({ sim, rxIndex, t, onRxIndexChange }: Slice2DProps) {
   const yTand: number[] = [];
   const yCvc: number[] = [];
   for (let fi = 0; fi < sim.fVec.length; fi++) {
-    yTand.push(parseFloat(sim.Z[reversedIndex][fi].toPrecision(10)));
-    yCvc.push(parseFloat(sim.Zcvc[reversedIndex][fi].toPrecision(10)));
+    yTand.push(parseFloat(sim.Z[reversedIndex][fi].toPrecision(12)));
+    yCvc.push(parseFloat(sim.Zcvc[reversedIndex][fi].toPrecision(12)));
   }
 
   const xData = Array.from(sim.fVec);
+
+  // When slider is at position 0 (R_x = R_z), all C_vc values are nearly identical.
+  // Fix the y-axis range so the line appears distinctly above zero.
+  const cvcYaxis: Partial<Plotly.LayoutAxis> = rxIndex === 0
+    ? { range: [0, Math.max(...yCvc) * 1.15] }
+    : {};
 
   return (
     <div>
@@ -99,7 +105,7 @@ export function Slice2D({ sim, rxIndex, t, onRxIndexChange }: Slice2DProps) {
         ]}
         layout={{
           xaxis: { title: t.axisF, type: 'log' },
-          yaxis: { title: t.axisCvc, tickformat: '.3e' },
+          yaxis: { title: t.axisCvc, tickformat: '.3e', ...cvcYaxis },
           title: t.sliceCvcTitle(rxLabel),
           showlegend: false,
           autosize: true,

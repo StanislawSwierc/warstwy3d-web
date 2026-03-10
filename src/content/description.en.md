@@ -1,5 +1,9 @@
 Defects in the insulation material, inaccurate impregnation, micro impurities cause a decrease in the resistance of the insulation layer and a local increase in energy losses. This leads to a local increase in temperature, the appearance of partial discharges, and consequently to the enlargement of the defective area and the breakdown of the insulating layer. This process is reflected in in results of bushing capacitance measurements, which increases in the ratio N/(N-1) after one layer is broken down, where N – the number of insulating layers in the capacitor core.
 
+<div style="text-align: center">
+    <img src="./diagram.png" alt="Equivalent circuit diagram">
+</div>
+
 During the deterioration of insulating layer, at first tan-delta increases, with constant voltage on the layer, but after reaching max. point, when layer resistance is significantly lower, the voltage decreases, together with tan-delta.
 
 When you calculate tan-delta as a function of layer resistance and frequency, you can see that tan-delta curve has a maximum, which reveals high resistance at low frequency and moving to higher frequencies when resistance decreases.

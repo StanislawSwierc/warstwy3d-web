@@ -4,7 +4,7 @@ import MarkdownIt from 'markdown-it'
 import texmath from 'markdown-it-texmath'
 import katex from 'katex'
 
-const md = new MarkdownIt()
+const md = new MarkdownIt({ html: true })
 md.use(texmath, { engine: katex, delimiters: 'dollars' })
 
 function markdownPlugin(): Plugin {
