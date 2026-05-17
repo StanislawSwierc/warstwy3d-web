@@ -81,14 +81,17 @@ export function Slice2D({ sim, rxIndex, t, onRxIndexChange }: Slice2DProps) {
           },
         ]}
         layout={{
-          xaxis: { title: t.axisF, type: 'log' },
-          yaxis: { title: t.axisTandC },
+          xaxis: { title: { text: t.axisF }, type: 'log' },
+          yaxis: {
+            title: { text: t.axisTandC, standoff: 40 },
+            automargin: true,
+          },
           title: t.sliceTitle(rxLabel),
           showlegend: false,
           autosize: true,
           height: 375,
           template: 'plotly_white' as unknown as Plotly.Template,
-          margin: { t: 50, b: 60, l: 70, r: 30 },
+          margin: { t: 50, b: 60, l: 100, r: 30 },
         }}
         useResizeHandler
         style={{ width: '100%', maxWidth: 960 }}
@@ -104,14 +107,19 @@ export function Slice2D({ sim, rxIndex, t, onRxIndexChange }: Slice2DProps) {
           },
         ]}
         layout={{
-          xaxis: { title: t.axisF, type: 'log' },
-          yaxis: { title: t.axisCvc, tickformat: '.3e', ...cvcYaxis },
+          xaxis: { title: { text: t.axisF }, type: 'log' },
+          yaxis: {
+            title: { text: t.axisCvc, standoff: 20 },
+            tickformat: '.3e',
+            automargin: true,
+            ...cvcYaxis,
+          },
           title: t.sliceCvcTitle(rxLabel),
           showlegend: false,
           autosize: true,
           height: 375,
           template: 'plotly_white' as unknown as Plotly.Template,
-          margin: { t: 50, b: 60, l: 70, r: 30 },
+          margin: { t: 50, b: 60, l: 100, r: 30 },
         }}
         useResizeHandler
         style={{ width: '100%', maxWidth: 960 }}
