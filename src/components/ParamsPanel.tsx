@@ -27,6 +27,14 @@ function labelFor(key: ParamKey, t: Translations): string {
   }
 }
 
+function unitFor(key: ParamKey, t: Translations): string {
+  switch (key) {
+    case 'Rz': return t.paramRzUnit;
+    case 'Cc': return t.paramCcUnit;
+    default: return '';
+  }
+}
+
 function validate(key: ParamKey, value: number, params: SimulationParams): boolean {
   if (!Number.isFinite(value) || value <= 0) return false;
   if (key === 'n') return Number.isInteger(value) && value >= 2;
@@ -153,12 +161,17 @@ export function ParamsPanel({ params, onParamsChange, t }: ParamsPanelProps) {
                 </div>
               </div>
             ) : (
-              <input
-                type="text"
-                value={drafts[key]}
-                onChange={e => handleChange(key, e.target.value)}
-                style={inputStyle(errors[key])}
-              />
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                <input
+                  type="text"
+                  value={drafts[key]}
+                  onChange={e => handleChange(key, e.target.value)}
+                  style={{ ...inputStyle(errors[key]), flex: 1 }}
+                />
+                <span style={{ color: '#64748b', fontSize: 13, whiteSpace: 'nowrap' }}>
+                  {unitFor(key, t)}
+                </span>
+              </div>
             )}
           </label>
         ))}

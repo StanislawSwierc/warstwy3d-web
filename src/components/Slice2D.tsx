@@ -56,20 +56,22 @@ export function Slice2D({ sim, rxIndex, t, onRxIndexChange }: Slice2DProps) {
 
   return (
     <div>
-      <div style={{ margin: '16px 0', display: 'flex', alignItems: 'center', gap: 12 }}>
-        <label htmlFor="rx-slider" style={{ fontWeight: 600 }}>
-          {t.sliderLabel}
-        </label>
-        <input
-          id="rx-slider"
-          type="range"
-          min={0}
-          max={maxIndex}
-          value={rxIndex}
-          onChange={(e) => onRxIndexChange(Number(e.target.value))}
-          style={{ flex: 1, maxWidth: 400 }}
-        />
-        <span style={{ minWidth: 100, fontFamily: 'monospace' }}>{rxLabel}Ω</span>
+      <div style={{ margin: '0 0 24px', padding: '18px 0' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <label htmlFor="rx-slider" style={{ fontWeight: 600 }}>
+            {t.sliderLabel}
+          </label>
+          <input
+            id="rx-slider"
+            type="range"
+            min={0}
+            max={maxIndex}
+            value={rxIndex}
+            onChange={(e) => onRxIndexChange(Number(e.target.value))}
+            style={{ flex: 1, maxWidth: 400 }}
+          />
+          <span style={{ minWidth: 100, fontFamily: 'monospace' }}>{rxLabel}Ω</span>
+        </div>
       </div>
       <Plot
         data={[

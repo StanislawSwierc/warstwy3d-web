@@ -151,13 +151,53 @@ export default function App() {
 
         <ParamsPanel params={params} onParamsChange={handleParamsChange} t={t} />
 
-        <Surface3D sim={sim} zData={sim.Z} zAxisTitle={t.axisTandC} t={t}
-          cameraEye={initial.cam1} onCameraChange={handleCam1Change} />
+        <div style={{
+          background: '#fff',
+          borderRadius: 16,
+          border: '1px solid #e5e7eb',
+          overflow: 'hidden',
+          marginBottom: 24,
+        }}>
+          <div style={{ padding: '20px 24px', borderBottom: '1px solid #e5e7eb' }}>
+            <h2 style={{ margin: 0, fontSize: 18, fontWeight: 600 }}>{t.paramsHeader}</h2>
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+              gap: 16,
+              marginTop: 16,
+              color: '#334155',
+            }}>
+              <div>
+                <div style={{ fontSize: 12, textTransform: 'uppercase', letterSpacing: '0.05em', color: '#64748b' }}>{t.paramN}</div>
+                <div style={{ marginTop: 4, fontWeight: 600 }}>{params.n}</div>
+              </div>
+              <div>
+                <div style={{ fontSize: 12, textTransform: 'uppercase', letterSpacing: '0.05em', color: '#64748b' }}>{t.paramK}</div>
+                <div style={{ marginTop: 4, fontWeight: 600 }}>{params.k}</div>
+              </div>
+              <div>
+                <div style={{ fontSize: 12, textTransform: 'uppercase', letterSpacing: '0.05em', color: '#64748b' }}>{t.paramRz}</div>
+                <div style={{ marginTop: 4, fontWeight: 600 }}>{params.Rz.toExponential(3)} Ω</div>
+              </div>
+              <div>
+                <div style={{ fontSize: 12, textTransform: 'uppercase', letterSpacing: '0.05em', color: '#64748b' }}>{t.paramCc}</div>
+                <div style={{ marginTop: 4, fontWeight: 600 }}>{params.Cc.toExponential(3)} F</div>
+              </div>
+            </div>
+          </div>
 
-        <Surface3D sim={sim} zData={sim.Zcvc} zAxisTitle={t.axisCvc} t={t}
-          cameraEye={initial.cam2} onCameraChange={handleCam2Change} />
+          <div style={{ padding: '24px', background: '#fff', display: 'grid', gap: 24 }}>
+            <Surface3D sim={sim} zData={sim.Z} zAxisTitle={t.axisTandC} t={t}
+              cameraEye={initial.cam1} onCameraChange={handleCam1Change} />
 
-        <Slice2D sim={sim} rxIndex={rxIndex} t={t} onRxIndexChange={setRxIndex} />
+            <Surface3D sim={sim} zData={sim.Zcvc} zAxisTitle={t.axisCvc} t={t}
+              cameraEye={initial.cam2} onCameraChange={handleCam2Change} />
+          </div>
+          <div style={{ height: 1, background: '#e5e7eb', margin: '0 24px' }} />
+          <div style={{ padding: '24px', background: '#fff' }}>
+            <Slice2D sim={sim} rxIndex={rxIndex} t={t} onRxIndexChange={setRxIndex} />
+          </div>
+        </div>
       </div>
     </LocaleContext.Provider>
   );

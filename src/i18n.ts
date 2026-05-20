@@ -19,7 +19,9 @@ export interface Translations {
   paramN: string;
   paramK: string;
   paramRz: string;
+  paramRzUnit: string;
   paramCc: string;
+  paramCcUnit: string;
   bannerText: string;
   bannerContact: string;
 }
@@ -36,10 +38,12 @@ const en: Translations = {
   sliceCvcTitle: (rxFormatted: string) => `C_vc(f) at R_x = ${rxFormatted} Ω`,
   langToggle: 'PL',
   paramsHeader: 'Parameters',
-  paramN: 'Number of layers (n)',
-  paramK: 'Damaged layers (k)',
-  paramRz: 'Nominal resistance R_z [\u03A9]',
-  paramCc: 'Bushing capacitance C_c [F]',
+  paramN: 'Number of layers',
+  paramK: 'Damaged layers',
+  paramRz: 'Nominal resistance',
+  paramRzUnit: 'Ω',
+  paramCc: 'Bushing capacitance',
+  paramCcUnit: 'F',
   bannerText: 'The presented charts are based on an equivalent circuit model of a transformer bushing, which has been empirically validated.',
   bannerContact: 'If you are interested in applying this model or would like more detailed information, please feel free to get in touch:',
 };
@@ -56,10 +60,12 @@ const pl: Translations = {
   sliceCvcTitle: (rxFormatted: string) => `C_vc(f) przy R_x = ${rxFormatted} Ω`,
   langToggle: 'EN',
   paramsHeader: 'Parametry',
-  paramN: 'Liczba warstw (n)',
-  paramK: 'Warstwy uszkodzone (k)',
-  paramRz: 'Rezystancja znamionowa R_z [\u03A9]',
-  paramCc: 'Pojemno\u015B\u0107 izolatora C_c [F]',
+  paramN: 'Liczba warstw',
+  paramK: 'Warstwy uszkodzone',
+  paramRz: 'Rezystancja znamionowa',
+  paramRzUnit: 'Ω',
+  paramCc: 'Pojemność izolatora',
+  paramCcUnit: 'F',
   bannerText: 'Prezentowane wykresy zostały opracowane w oparciu o model układu zastępczego izolatora przepustowego, którego skuteczność potwierdzono w praktycznych badaniach.',
   bannerContact: 'Jeśli są Państwo zainteresowani wykorzystaniem tego modelu lub chcą uzyskać szczegółowe informacje, serdecznie zapraszam do kontaktu:',
 };
